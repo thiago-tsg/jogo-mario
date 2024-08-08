@@ -3,35 +3,42 @@ const pipe = document.querySelector('.pipe');
 const gameOver = document.querySelector('.game-over');
 const btn = document.querySelector('.btn');
 
-// Função para o Mario pular
+
 const jump = () => {
     if (!mario.classList.contains('jump')) {
         mario.classList.add('jump');
 
         setTimeout(() => {
             mario.classList.remove('jump');
-        }, 500); // Duração da animação de pulo
+        }, 500);
     }
 }
 
-// Função para reiniciar o jogo
+
 const restart = () => {
-    // Reseta as propriedades do Mario
-    mario.style.animation = ''; // Remove qualquer animação aplicada
+    
+    mario.style.animation = '';
     mario.style.bottom = '0';
     mario.src = '../img/mario.gif';
-    mario.style.width = '150px';
+
+    if (window.innerWidth <= 1000) {
+        mario.style.width = '80px';
+        pipe.style.width = '50px';
+        pipe.style.height = '50px';
+    } else {
+        mario.style.width = '150px';
+        pipe.style.width = '80px';
+        pipe.style.height = '100px';
+    }
+
     mario.style.marginLeft = '0';
 
-    // Reseta a animação do tubo
     pipe.style.animation = 'pipe-animation 2s infinite linear';
     pipe.style.left = '100%';
 
-    // Esconde o game over e o botão
     gameOver.style.display = 'none';
     btn.style.display = 'none';
 
-    // Reinicia o loop de jogo
     loop = setInterval(() => {
         const pipePosition = pipe.offsetLeft;
         const marioPosition = +getComputedStyle(mario).bottom.replace('px', '');
@@ -55,7 +62,6 @@ const restart = () => {
     }, 10);
 }
 
-// Inicializa o loop de jogo
 let loop = setInterval(() => {
     const pipePosition = pipe.offsetLeft;
     const marioPosition = +getComputedStyle(mario).bottom.replace('px', '');
@@ -78,7 +84,6 @@ let loop = setInterval(() => {
     }
 }, 10);
 
-// Adiciona o evento de pressionar qualquer tecla ou tocar na tela
 document.addEventListener('keydown', () => {
     jump();
     if (gameOver.style.display === 'flex') {
