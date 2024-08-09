@@ -3,7 +3,6 @@ const pipe = document.querySelector('.pipe');
 const gameOver = document.querySelector('.game-over');
 const btn = document.querySelector('.btn');
 
-
 const jump = () => {
     if (!mario.classList.contains('jump')) {
         mario.classList.add('jump');
@@ -14,9 +13,7 @@ const jump = () => {
     }
 }
 
-
 const restart = () => {
-    
     mario.style.animation = '';
     mario.style.bottom = '0';
     mario.src = '../img/mario.gif';
@@ -42,8 +39,14 @@ const restart = () => {
     loop = setInterval(() => {
         const pipePosition = pipe.offsetLeft;
         const marioPosition = +getComputedStyle(mario).bottom.replace('px', '');
+        const pipeWidth = pipe.offsetWidth;
+        const marioHeight = mario.offsetHeight;
 
-        if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 80) {
+        // Ajuste dinâmico dos valores de colisão
+        const collisionThresholdX = pipeWidth - 20; // Pequeno ajuste para a colisão horizontal
+        const collisionThresholdY = marioHeight - 20; // Pequeno ajuste para a colisão vertical
+
+        if (pipePosition <= collisionThresholdX && pipePosition > 0 && marioPosition < collisionThresholdY) {
             pipe.style.animation = 'none';
             pipe.style.left = `${pipePosition}px`;
 
@@ -65,8 +68,14 @@ const restart = () => {
 let loop = setInterval(() => {
     const pipePosition = pipe.offsetLeft;
     const marioPosition = +getComputedStyle(mario).bottom.replace('px', '');
+    const pipeWidth = pipe.offsetWidth;
+    const marioHeight = mario.offsetHeight;
 
-    if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 80) {
+    // Ajuste dinâmico dos valores de colisão
+    const collisionThresholdX = pipeWidth - 20; // Pequeno ajuste para a colisão horizontal
+    const collisionThresholdY = marioHeight - 20; // Pequeno ajuste para a colisão vertical
+
+    if (pipePosition <= collisionThresholdX && pipePosition > 0 && marioPosition < collisionThresholdY) {
         pipe.style.animation = 'none';
         pipe.style.left = `${pipePosition}px`;
 
@@ -97,3 +106,4 @@ document.addEventListener('touchstart', () => {
         restart();
     }
 });
+  
